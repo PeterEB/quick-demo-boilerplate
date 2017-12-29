@@ -13,6 +13,13 @@ var PATHS = {
     ]
 };
 
+var reactDomLibPath = path.join(__dirname, "./node_modules/react-dom/lib");
+var alias = {};
+["EventPluginHub", "EventConstants", "EventPluginUtils", "EventPropagators",
+    "SyntheticUIEvent", "CSSPropertyOperations", "ViewportMetrics"].forEach(function(filename){
+    alias["react/lib/"+filename] = path.join(__dirname, "./node_modules/react-dom/lib", filename);
+});
+
 module.exports = {
     devtool: 'eval-source-map',
 
@@ -24,7 +31,9 @@ module.exports = {
         style: PATHS.style
     },
 
-    output: {
+    resolve: {alias: alias},
+
+    output: {resolve: {alias: alias},
         path: PATHS.build,
         filename: '[name].js',
         publicPath: '/'
